@@ -88,7 +88,6 @@ const ConnectScreen = () => {
           </View>
         )}
       />
-
       <Text style={styles.heading}>Appointments</Text>
       {appointments.map((appointment) => (
         <View key={appointment.id} style={styles.appointmentCard}>
