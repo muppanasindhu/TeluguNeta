@@ -1,0 +1,39 @@
+import React, { createContext, useContext, useState } from 'react';
+
+const GrievanceContext = createContext();
+
+export const GrievanceProvider = ({ children }) => {
+  const [grievances, setGrievances] = useState([
+    {
+      id: '1',
+      location: 'Rajahmundry',
+      title: 'Irregular Water Supply in Urban Area',
+      profilePicture: require('../assets/profile1.png'),
+      status: 'Active',
+      date: '1 day ago',
+    },
+    {
+      id: '2',
+      location: 'Hyderabad',
+      title: 'Street Light Not Working',
+      profilePicture: require('../assets/profile2.png'),
+      status: 'Resolved',
+      date: '2 days ago',
+    },
+    // Add more default grievances as needed
+  ]);
+
+  const addGrievance = (newGrievance) => {
+    setGrievances(prevGrievances => [...prevGrievances, newGrievance]);
+  };
+
+  return (
+    <GrievanceContext.Provider value={{ grievances, addGrievance }}>
+      {children} {/* Render children directly without wrapping in <Text> */}
+    </GrievanceContext.Provider>
+  );
+};
+
+export const useGrievanceContext = () => {
+  return useContext(GrievanceContext);
+};

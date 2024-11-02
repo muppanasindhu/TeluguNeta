@@ -1,0 +1,187 @@
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
+
+// Sample user data
+const users = [
+  { id: '1', name: 'Vasu Reddy', avatarUrl: require('../assets/profile1.png') },
+  { id: '2', name: 'Vasu', avatarUrl: require('../assets/profile1.png') },
+  // Add more users as needed
+];
+
+// Function to generate a UUID
+const generateUUID = () => {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0;
+    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+};
+
+const AddGrievance = ({ navigation }) => {
+  const [title, setTitle] = useState('');
+  const [category, setCategory] = useState('Water Supply');
+  const [assignedTo, setAssignedTo] = useState(users[0].id);
+  const [description, setDescription] = useState('');
+  const [location, setLocation] = useState('');
+  const [attachments, setAttachments] = useState([]); // State to manage attachments
+
+  const handleSubmit = () => {
+    const newGrievance = {
+      id: generateUUID(), // Generate unique ID
+      location,
+      title,
+      profilePicture: require('../assets/profile1.png'), // Default profile picture
+      status: 'Active', // Default status
+      date: new Date().toLocaleDateString(), // Set the date to today
+      attachments, // Include attachments in the grievance object
+    };
+
+    // Navigate to the GrievanceDetails screen and pass the new grievance
+    navigation.navigate('GrievanceDetails', { grievance: newGrievance });
+
+    // Reset form fields
+    setTitle('');
+    setCategory('Water Supply');
+    setAssignedTo(users[0].id);
+    setDescription('');
+    setLocation('');
+    setAttachments([]); // Clear attachments
+  };
+
+  const handleAddAttachment = () => {
+    // Logic to add an attachment (this can be file picker or any other implementation)
+    // Here we'll just simulate adding an attachment for demonstration purposes
+    setAttachments([`Attachment ${attachments.length + 1}`]); // Only keep the last attachment
+  };
+
+  return (
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.header}>Add Grievance</Text>
+
+      <Text style={styles.label}>Title</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Inconsistent Water Supply Affecting Daily Life"
+        value={title}
+        onChangeText={setTitle}
+      />
+
+      <Text style={styles.label}>Category</Text>
+      <Picker
+        selectedValue={category}
+        style={styles.picker}
+        onValueChange={(itemValue) => setCategory(itemValue)}
+      >
+        <Picker.Item label="Water Supply" value="Water Supply" />
+        <Picker.Item label="Road Maintenance" value="Road Maintenance" />
+        <Picker.Item label="Waste Management" value="Waste Management" />
+        <Picker.Item label="Electricity Supply" value="Electricity Supply" />
+        <Picker.Item label="Public Safety" value="Public Safety" />
+        <Picker.Item label="Community Services" value="Community Services" />
+      </Picker>
+
+      <Text style={styles.label}>Assigned To</Text>
+      <Picker
+        selectedValue={assignedTo}
+        style={styles.picker}
+        onValueChange={(itemValue) => setAssignedTo(itemValue)}
+      >
+        {users.map(user => (
+          <Picker.Item key={user.id} label={user.name} value={user.id} />
+        ))}
+      </Picker>
+
+      <Text style={styles.label}>Attachments</Text>
+      <View style={styles.attachmentField}>
+        <TouchableOpacity onPress={handleAddAttachment}>
+          <Text style={styles.attachmentButtonText}>Add Attachment</Text>
+        </TouchableOpacity>
+        {attachments.length > 0 && (
+          <Text style={styles.attachmentText}>{attachments[attachments.length - 1]}</Text> // Show only the last attachment
+        )}
+      </View>
+
+      <Text style={styles.label}>Description</Text>
+      <TextInput
+        style={[styles.input, styles.descriptionInput]}
+        placeholder="Description"
+        value={description}
+        onChangeText={setDescription}
+        multiline
+        textAlignVertical="top"
+      />
+
+      <Text style={styles.label}>Location</Text>
+      <TextInput
+        style={[styles.input, styles.descriptionInput]}
+        placeholder="Location"
+        value={location}
+        onChangeText={setLocation}
+        textAlignVertical="top"
+        multiline
+      />
+
+      <Button title="Submit" onPress={handleSubmit} />
+    </ScrollView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flexGrow: 1,
+    padding: 16,
+    backgroundColor: '#f9f9f9',
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
+    textAlign: 'center',
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  input: {
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 4,
+    paddingHorizontal: 10,
+    marginBottom: 12,
+    backgroundColor: '#fff',
+  },
+  descriptionInput: {
+    height: 80,
+  },
+  picker: {
+    height: 50,
+    marginBottom: 12,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 4,
+    backgroundColor: '#fff',
+  },
+  attachmentField: {
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 4,
+    padding: 10,
+    marginBottom: 12,
+    backgroundColor: '#fff',
+    alignItems: 'center', // Center the content horizontally
+  },
+  attachmentButtonText: {
+    color: '#007bff',
+    marginBottom: 8,
+  },
+  attachmentText: {
+    fontSize: 14,
+    marginVertical: 2,
+    color: '#333',
+  },
+});
+
+export default AddGrievance;

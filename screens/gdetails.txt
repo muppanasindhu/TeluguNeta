@@ -1,0 +1,201 @@
+const GrievanceDetails = () => {
+  const [newComment, setNewComment] = useState('');
+
+  const handleAddComment = () => {
+    // Add the new comment to the list of comments (not implemented in this example)
+    console.log('New comment:', newComment);
+    setNewComment(''); // Clear the input field
+  };
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.title}>Grievance Details</Text>
+        <TouchableOpacity style={styles.menuButton}>
+          <Text style={styles.buttonText}>...</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.mainContent}>
+        <Text style={styles.grievanceTitle}>Inconsistent Water Supply Affecting Daily Life</Text>
+        <View style={styles.assignedTo}>
+          <Image source={require('../assets/profile1.png')} style={styles.avatar} />
+          <Text style={styles.assignedToText}>Assigned to: Adireddy Vasu</Text>
+        </View>
+
+        <Text style={styles.description}>
+          This category is for issues related to the availability, quality, and distribution of water. It includes grievances such as irregular water supply, contaminated water, etc.
+        </Text>
+
+        <Text style={styles.attachmentsTitle}>Attachments</Text>
+        <View style={styles.attachments}>
+          <Image source={require('../assets/profile1.png')} style={styles.attachmentImage} />
+          <Image source={require('../assets/profile1.png')} style={styles.attachmentImage} />
+          <TouchableOpacity style={styles.playButton}>
+            <Text style={styles.playButtonText}>Play</Text>
+          </TouchableOpacity>
+        </View>
+
+        <Text style={styles.commentsTitle}>Comments</Text>
+        <View style={styles.comment}>
+          <Image source={require('../assets/profile1.png')} style={styles.avatar} />
+          <View style={styles.commentContent}>
+            <Text style={styles.commentName}>Venkat</Text>
+            <Text style={styles.commentText}>Good Morning Vasu Garu, can you please follow up and get the issue resolved.</Text>
+            <Text style={styles.commentTimestamp}>Friday 2:20pm</Text>
+          </View>
+        </View>
+
+        <View style={styles.comment}>
+          <Image source={require('../assets/profile1.png')} style={styles.avatar} />
+          <View style={styles.commentContent}>
+            <Text style={styles.commentName}>Adireddy Vasu</Text>
+            <Text style={styles.commentText}>Hi Venkat, sure. I will follow up with the team concerned and get this resolved.</Text>
+            <Text style={styles.commentTimestamp}>Friday 2:20pm</Text>
+          </View>
+        </View>
+      </View>
+
+      <View style={styles.commentInput}>
+        <TextInput
+          style={styles.commentInputBox}
+          placeholder="Add new comment..."
+          value={newComment}
+          onChangeText={setNewComment}
+        />
+        <TouchableOpacity style={styles.sendButton} onPress={handleAddComment}>
+          <Text style={styles.sendButtonText}>Send</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
+
+// Styles for the components
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#ffffff',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 16,
+  },
+  menuButton: {
+    padding: 10,
+  },
+  buttonText: {
+    color: '#007bff',
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  mainContent: {
+    flex: 1,
+  },
+  grievanceTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  assignedTo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  avatar: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginRight: 8,
+  },
+  assignedToText: {
+    fontSize: 16,
+  },
+  description: {
+    fontSize: 14,
+    marginBottom: 16,
+  },
+  attachmentsTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  attachments: {
+    flexDirection: 'row',
+    marginBottom: 16,
+  },
+  attachmentImage: {
+    width: 80,
+    height: 80,
+    marginRight: 8,
+    borderRadius: 5,
+  },
+  playButton: {
+    backgroundColor: '#007bff',
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+  },
+  playButtonText: {
+    color: '#ffffff',
+  },
+  commentsTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  comment: {
+    flexDirection: 'row',
+    marginBottom: 12,
+    alignItems: 'flex-start',
+  },
+  commentContent: {
+    flex: 1,
+    backgroundColor: '#f1f1f1',
+    borderRadius: 5,
+    padding: 10,
+    marginLeft: 8,
+  },
+  commentName: {
+    fontWeight: 'bold',
+  },
+  commentText: {
+    fontSize: 14,
+    marginVertical: 4,
+  },
+  commentTimestamp: {
+    fontSize: 12,
+    color: '#888',
+  },
+  commentInput: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderTopWidth: 1,
+    borderTopColor: '#ddd',
+    paddingVertical: 8,
+  },
+  commentInputBox: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 5,
+    padding: 8,
+    marginRight: 8,
+  },
+  sendButton: {
+    backgroundColor: '#007bff',
+    borderRadius: 5,
+    padding: 10,
+  },
+  sendButtonText: {
+    color: '#ffffff',
+  },
+});
+
+export default GrievanceDetails;
